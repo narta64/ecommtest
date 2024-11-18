@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>DHT Readings</title>
+	<style type="text/css">
+		body{
+			background-color: #F5F5F5;
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+		.data-container{
+			display: flex;
+			justify-content: space-between;
+			width: 50%;
+			margin: 50px auto;
+			padding: 20px;
+			background-color: #FFF;
+			box-shadow: 0 2px 20px rgba(0, 0, 0,0.1);
+			border-radius: 10px;
+		}
+
+		.data-item{
+			text-align: center;
+		}
+
+		.data-item h2{
+			font-size: 24px;
+			font-weight: bold;
+			margin-bottom: 10px;
+		}
+
+		.data-item p{
+			font-size: 48px;
+			font-weight: bold;
+			color: #6EB7FF;
+		}
+
+		.data-head{
+			margin: auto;
+			width: 50%;
+			text-align: center;
+			font-size: 45px;
+			font-weight: bold;
+			margin: 50px auto;
+			padding: 20px;
+			background-color: #FFF;
+			box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+			border-radius: 20px;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="data-head">DHT Sensor Realtime Readings</div>
+
+	<div class="data-container">
+		<div class="data-item">
+			<h2>Temperature</h2>
+			<p class="value" id="temperature">22 &#8451;</p>
+		</div>
+		<div class="data-item">
+			<h2>Humidity</h2>
+			<p class="value" id="humidity">10%</p>
+		</div>
+		<!-- Added separate sections for property data -->
+		<div class="data-item">
+			<h2>Property 1 Address</h2>
+			<p class="value" id="property1Address"></p>
+		</div>
+		<div class="data-item">
+			<h2>Property 2 Address</h2>
+			<p class="value" id="property2Address"></p>
+		</div>
+	</div>
+
+	<!-- Firebase scripts (using modular SDK version 9 or later) -->
+	<script type="module">
+        // Import the functions you need from the SDKs
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js';
+
+        // Your Firebase config (replace with your actual Firebase credentials)
+        const firebaseConfig = {
+          apiKey: "AIzaSyBMbKhsBiBdaIl3XA4t2SaguNwyYZlDyMQ",
+          authDomain: "whole-sale-real-estate-project.firebaseapp.com",
+          databaseURL: "https://whole-sale-real-estate-project-default-rtdb.firebaseio.com",
+          projectId: "whole-sale-real-estate-project",
+          storageBucket: "whole-sale-real-estate-project.firebasestorage.app",
+          messagingSenderId: "947479016032",
+          appId: "1:947479016032:web:ebc49b75cf2b042fce0905"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);  // Get a reference to the database
+
+        // Get references to the data you want
+        const property1Ref = ref(database, 'Property1/Address');
+        const property2Ref = ref(database, 'Property2/Address');
+
+        // Fetch data for Property 1 and display it
+        onValue(property1Ref, (snapshot) => {
+          const property1Address = snapshot.val();
+          document.getElementById('property1Address').innerHTML = property1Address || "No data";
+        });
+
+        // Fetch data for Property 2 and display it
+        onValue(property2Ref, (snapshot) => {
+          const property2Address = snapshot.val();
+          document.getElementById('property2Address').innerHTML = property2Address || "No data";
+        });
+    </script>
+
+</body>
+</html>

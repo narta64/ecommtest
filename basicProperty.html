@@ -1,0 +1,170 @@
+<!-- still needs firebase backend for the properties to be loaded in-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- may decide to make this our 'name' that we come up with-->
+    <title>Wholesaling Real Estate</title>
+      <!-- styling for the page and listing container -->
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Real Estate MLS</h1>
+    <form id="search-form">
+        <input type="number" id="min-price" placeholder="Min Price">
+        <input type="number" id="max-price" placeholder="Max Price">
+        <input type="number" id="bedrooms" placeholder="Bedrooms">
+        <button type="submit">Search</button>
+    </form>
+    <!-- creates a div that is used to hold properties  -->
+    <div id="listing-container"></div>
+    <div id="pagination"></div>
+    <div id="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <script>
+        // Sample property data
+        const listings = [
+            {
+                id: 1,
+                address: "123 Main St",
+                price: 350000,
+                bedrooms: 3,
+                bathrooms: 2,
+                sqft: 1800,
+                image: "https://example.com/house1.jpg",
+                description: "Beautiful family home with spacious backyard.",
+                yearBuilt: 2005,
+                garage: "2-car attached",
+                lotSize: "0.25 acres"
+            },
+            {
+                id: 2,
+                address: "456 Elm St",
+                price: 425000,
+                bedrooms: 4,
+                bathrooms: 2.5,
+                sqft: 2200,
+                image: "https://example.com/house2.jpg",
+                description: "Modern home with open floor plan and updated kitchen.",
+                yearBuilt: 2015,
+                garage: "3-car attached",
+                lotSize: "0.3 acres"
+            },
+            // Add more listings as needed
+        ];
+
+        const listingsPerPage = 6;
+        let currentPage = 1;
+        let filteredListings = [...listings];
+
+        function displayListings(page) {
+        //fetches properties or "listings" via the container div we created earlier
+            const container = document.getElementById('listing-container');
+            container.innerHTML = '';
+            const start = (page - 1) * listingsPerPage;
+            const end = start + listingsPerPage;
+            const pageListings = filteredListings.slice(start, end);
+
+            pageListings.forEach(listing => {
+                //declares listingElement as one of the children of listings which is defined above as the sample data
+              //and creates a 'div' which is later added to the container group
+                const listingElement = document.createElement('div');
+                listingElement.className = 'listing';
+                 //creates an element within the listing-container div with the following html attributes
+                listingElement.innerHTML = `
+                    <img src="${listing.image}" alt="${listing.address}">
+                    <h2>${listing.address}</h2>
+                    <p>Price: $${listing.price.toLocaleString()}</p>
+                    <p>Bedrooms: ${listing.bedrooms}</p>
+                    <p>Bathrooms: ${listing.bathrooms}</p>
+                    <p>Square Feet: ${listing.sqft}</p>
+                `;
+                listingElement.onclick = () => showModal(listing);
+                 //adds the just created element of the container div to the container const 
+                container.appendChild(listingElement);
+            });
+
+            updatePagination();
+        }
+
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredListings.length / listingsPerPage);
+            const paginationElement = document.getElementById('pagination');
+            paginationElement.innerHTML = '';
+
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement('button');
+                button.innerText = i;
+                button.onclick = () => {
+                    currentPage = i;
+                    displayListings(currentPage);
+                };
+                paginationElement.appendChild(button);
+            }
+        }
+
+        function showModal(listing) {
+            const modal = document.getElementById('modal');
+            const modalContent = document.getElementById('modal-content');
+            modalContent.innerHTML = `
+                <h2>${listing.address}</h2>
+                <img src="${listing.image}" alt="${listing.address}" style="max-width: 100%;">
+                <p>Price: $${listing.price.toLocaleString()}</p>
+                <p>Bedrooms: ${listing.bedrooms}</p>
+                <p>Bathrooms: ${listing.bathrooms}</p>
+                <p>Square Feet: ${listing.sqft}</p>
+                <p>Year Built: ${listing.yearBuilt}</p>
+                <p>Garage: ${listing.garage}</p>
+                <p>Lot Size: ${listing.lotSize}</p>
+                <p>Description: ${listing.description}</p>
+            `;
+            modal.style.display = "block";
+        }
+
+        document.querySelector('.close').onclick = function() {
+            document.getElementById('modal').style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('modal')) {
+                document.getElementById('modal').style.display = "none";
+            }
+        }
+
+        document.getElementById('search-form').onsubmit = function(e) {
+            e.preventDefault();
+            const minPrice = document.getElementById('min-price').value;
+            const maxPrice = document.getElementById('max-price').value;
+            const bedrooms = document.getElementById('bedrooms').value;
+
+            filteredListings = listings.filter(listing => {
+                return (!minPrice || listing.price >= minPrice) &&
+                       (!maxPrice || listing.price <= maxPrice) &&
+                       (!bedrooms || listing.bedrooms >= bedrooms);
+            });
+
+            currentPage = 1;
+            displayListings(currentPage);
+        }
+
+        // Initial display
+        displayListings(currentPage);
+    </script>
+</body>
+</html>

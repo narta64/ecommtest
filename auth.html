@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Register</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Import config.js first to initialize Firebase, then import script.js -->
+    <script type="module" src="firebaseConfig.js"></script>
+    <script type="module" src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Login or Register</h1>
+        <button id="home-button">Home</button>
+    </header>
+
+    <section id="auth">
+        <h2>Register</h2>
+        <form id="register-form">
+            <input type="email" id="register-username" placeholder="Email" required>
+            <input type="password" id="register-password" placeholder="Password" required><br>
+
+            <!-- Radio buttons for user type -->
+            <label>Select User Type:</label><br>
+            <input type="radio" id="realtor" name="userType" value="Realtor" required>
+            <label for="realtor">Realtor</label><br>
+            <input type="radio" id="investor" name="userType" value="Investor" required>
+            <label for="investor">Property Investor</label><br>
+            <input type="radio" id="owner" name="userType" value="Owner" required>
+            <label for="owner">Home Owner</label><br>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <h2>Login</h2>
+        <form id="login-form">
+            <input type="email" id="login-username" placeholder="Email" required>
+            <input type="password" id="login-password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </section>
+
+    <!-- Home button script to redirect to main page -->
+    <script>
+        document.getElementById('home-button').addEventListener('click', function() {
+            window.location.href = "index.html";
+        });
+    </script>
+</body>
+</html>
+

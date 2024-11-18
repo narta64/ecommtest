@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Distressed Property Finder</title>
+        <link rel="stylesheet" href="styles.css">
+    
+        <!-- Leaflet and Marker Cluster -->
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+        <script src="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+    
+        <!-- Chart.js for Analytics 
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
+    
+        <!-- Import config.js first to initialize Firebase, then import script.js -->
+        <script type="module" src="firebaseConfig.js"></script>
+        <script type="module" src="script.js" defer></script>
+    </head>   
+<body>
+    <header>
+        <h1>Distressed Property Finder</h1>
+        <nav>
+            <ul>
+                <li><a href="#how-it-works">How it Works</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+                <!-- Updated to dynamically link to Profile or Login/Register -->
+                <li id="auth-link"><a href="auth.html">Login/Register</a></li>
+            </ul>
+        </nav>
+        <!-- Top right user display -->
+        <div id="user-display" class="user-info"></div>
+    </header>
+    
+    <section id="how-it-works">
+        <h2>How It Works</h2>
+        <p>We help you find distressed properties using GSP mapping and low-income area data. Get the best deals in real estate investment.</p>
+    </section>
+    
+    <section id="services">
+        <h2>Our Services</h2>
+        <form id="advanced-search">
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location">
+            
+            <label for="price">Max Price:</label>
+            <input type="number" id="price" name="price">
+            
+            <label for="bedrooms">Bedrooms:</label>
+            <select id="bedrooms" name="bedrooms">
+                <option value="any">Any</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <!-- Seb- added the 3 and 4+ options within the drop-down for the bedroom search feature  -->
+                <option value="3">3</option>
+                <option value="4">4+</option>
+            </select>
+
+            <label for="property-type">Property Type:</label>
+            <select id="property-type" name="property-type">
+                <option value="all">All</option>
+                <option value="house">House</option>
+                <option value="condo">Condo</option>
+                <!-- Changed the "land" value to "lot" values  -->
+                <option value="lot">Lot</option>
+            </select>
+
+            <button type="submit">Search Properties</button>
+        </form>
+
+        <div id="map" style="height: 400px;"></div>
+        <canvas id="myChart" width="400" height="200"></canvas>
+    </section>
+    
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <form id="contact-form">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message"></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+    
+    <footer>
+        <p>&copy; 2024 Distressed Property Finder. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+

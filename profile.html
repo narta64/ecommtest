@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Import config.js first to initialize Firebase, then import script.js -->
+    <script type="module" src="FirebaseConfig.js"></script>
+    <script type="module" src="script.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to Your Profile</h1>
+        <button id="home-button">Home</button>
+        <div id="user-display" class="user-info"></div>
+        <button id="logout">Logout</button>
+    </header>
+
+    <body>
+        <h1>File Documentation System</h1>
+
+        <div>
+            <h2>Upload File</h2>
+            <input type="file" id="fileInput" />
+            <input type="text" id="description" placeholder="Enter file description" />
+            <button onclick="uploadFile()">Upload</button>
+            <p id="uploadStatus"></p>
+        </div>
+
+        <div>
+            <h2>Available Files</h2>
+            <ul id="fileList"></ul>
+        </div>
+
+        <script src="script.js"></script>
+    </body>
+    <section id="user-info">
+        <h2>User Profile</h2>
+        <p id="profile-username"></p>
+    </section>
+</body>
+
+
+</html>
