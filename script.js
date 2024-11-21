@@ -82,6 +82,19 @@ if (homeButton) {
     });
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    if (window.location.pathname.includes("wholesaling.html")) {
+        const section = document.querySelector("section");
+        const button = document.createElement("button");
+        button.textContent = "Learn More";
+        section.appendChild(button);
+
+        button.addEventListener("click", () => {
+            alert("More wholesaling details coming soon!");
+        });
+    }
+});
+
 // Logout functionality
 const logoutButton = document.getElementById('logout');
 if (logoutButton) {
@@ -271,5 +284,6 @@ function displayPropertiesOnMap(properties) {
         }
     });
     
+
     
 }
